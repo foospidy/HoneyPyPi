@@ -18,7 +18,7 @@ install_deps () {
 
 	cd /tmp
 	wget https://github.com/foospidy/clilib/archive/master.zip
-	unzip master.zip
+	unzip -o master.zip
 	cd clilib-master
 	python setup.py bdist_egg
 	easy_install -Z dist/clilib-0.0.1-py2.7.egg
