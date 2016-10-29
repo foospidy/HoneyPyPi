@@ -20,3 +20,7 @@ Usage:
 #### Install
 
 `# ./HoneyPyPi -i`
+
+#### Run
+
+When you log into the `honey` account HoneyPy will automatically launch.
