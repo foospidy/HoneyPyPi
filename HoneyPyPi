@@ -78,6 +78,7 @@ set_profile () {
 		cp $service_profile $service_config
 	else
 		echo "Error, profile not found!"
+		exit
 	fi
 
 	install_iptkit
