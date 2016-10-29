@@ -4,6 +4,7 @@ DISPLAY_USAGE="true"
 
 create_user () {
 	echo "Creating user account..."
+	adduser honey
 	echo "clear; python \$HOME/HoneyPy/Honey.py; exit;" > /home/honey/.bash_login
 	echo "if [ \"\$SHLVL\" = 1 ]; then [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q; fi" > /home/honey/.bash_logout
 	echo "clear;" >> /home/honey/.bash_logout
