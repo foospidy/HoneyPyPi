@@ -21,6 +21,10 @@ Usage:
 
 `# ./HoneyPyPi -i`
 
-#### Run
+#### Running HoneyPy
 
-When you log into the `honey` account HoneyPy will automatically launch.
+When you log into the `honey` account HoneyPy will automatically launch. You should first log into another account, either another user account or root, and run `screen` before switching to the `honey` user. Using `screen` will ensure the HoneyPy continues running if your terminal session is disconnected. Example steps:
+
+- Login as `<your user account>` or `root`.
+- Run `screen`
+- Switch user to honey, `su - honey`
