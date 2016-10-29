@@ -34,7 +34,6 @@ install_honeypy() {
 
 	cd /home/honey
 	git clone https://github.com/foospidy/HoneyPy
-	chown -R honey:honey /home/foney/HoneyPy
 }
 
 install_iptkit () {
@@ -59,6 +58,10 @@ check_os () {
 	fi
 }
 
+set_permissions () {
+	chown -R honey:honey /home/honey/HoneyPy
+}
+
 set_profile () {
 	echo "Set Profile ${1}"
 
@@ -78,6 +81,7 @@ set_profile () {
 	fi
 
 	install_iptkit
+	set_permissions
 }
 
 list_profiles () {
@@ -112,7 +116,6 @@ do
 			install_honeypy
 			set_profile
 			install_iptkit
-			
 			shift
 			;;
 
