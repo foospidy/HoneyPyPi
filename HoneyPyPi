@@ -71,11 +71,11 @@ set_profile () {
 		exit
 	fi
 
-	service_profile="/home/honey/HoneyPy/etc/profiles/services.${1}.profile"
-	service_config="/home/honey/HoneyPy/etc/service.cfg"
+	services_profile="/home/honey/HoneyPy/etc/profiles/services.${1}.profile"
+	services_config="/home/honey/HoneyPy/etc/services.cfg"
 	if [ -f $service_profile ]
 	then
-		cp $service_profile $service_config
+		cp $services_profile $services_config
 	else
 		echo "Error, profile not found!"
 		exit
