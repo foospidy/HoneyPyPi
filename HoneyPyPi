@@ -1,0 +1,141 @@
+#!/bin/bash
+
+DISPLAY_USAGE="true"
+
+create_user () {
+	echo "Creating user account..."
+	echo "clear; python \$HOME/HoneyPy/Honey.py; exit;" > /home/honey/.bash_login
+	echo "if [ \"\$SHLVL\" = 1 ]; then [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q; fi" > /home/honey/.bash_logout
+	echo "clear;" >> /home/honey/.bash_logout
+	chown -R honey:honey /home/honey/*
+}
+
+install_deps () {
+	apt-get update
+	apt-get install -y python-requests python-pip iptables
+	pip install twitter
+	pip install dnslib
+
+	cd /tmp
+	wget https://github.com/foospidy/clilib/archive/master.zip
+	unzip master.zip
+	cd clilib-master
+	python setup.py bdist_egg
+	easy_install -Z dist/clilib-0.0.1-py2.7.egg
+}
+
+install_honeypy() {
+	if [ -d "/home/honey/HoneyPy" ]
+	then
+		echo "/home/honey/HoneyPy already exists. Remove it and rerun install"
+		exit
+	fi
+
+	cd /home/honey
+	git clone https://github.com/foospidy/HoneyPy
+	chown -R honey:honey /home/foney/HoneyPy
+}
+
+install_iptkit () {
+	if [ -d "ipt-kit" ]
+	then
+		rm -rf ipt-kit
+	fi
+	git clone https://github.com/foospidy/ipt-kit
+	python /home/honey/HoneyPy/Honey.py -ipt
+	cd ipt-kit
+	mv /tmp/honeypy-ipt.sh .
+	./honeypy-ipt.sh > /dev/null
+	./ipt_survive_reboot
+}
+
+check_os () {
+	# check for debian and debian version
+	if [ ! -f "/etc/debian_version" ]
+	then
+	 	echo "No debian_version file present, is this Debian?"
+		exit
+	fi
+}
+
+set_profile () {
+	echo "Set Profile ${1}"
+
+	if [ 0 -ne `id -u` ]
+	then
+		echo "You must run as root!"
+		exit
+	fi
+
+	service_profile="/home/honey/HoneyPy/etc/profiles/services.${1}.profile"
+	service_config="/home/honey/HoneyPy/etc/service.cfg"
+	if [ -f $service_profile ]
+	then
+		cp $service_profile $service_config
+	else
+		echo "Error, profile not found!"
+	fi
+
+	install_iptkit
+}
+
+list_profiles () {
+	if [ -d /home/honey/HoneyPy/etc/profiles ];
+	then
+		ls /home/honey/HoneyPy/etc/profiles | awk '{ FS = "."; print $2 }'
+	else
+		echo "Error, profiles directory not found!"
+	fi
+}
+
+usage () {
+	echo "Usage:"
+	echo "./HoneyPyPi [-i] [-p] [-lp]"
+	echo ""
+        echo "-i        Install everyting."
+        echo "-p        Set/change HoneyPy service profile."
+	echo "-lp       List profiles."
+}
+
+while [[ $# -gt 0 ]]
+do
+	DISPLAY_USAGE="false"
+	key="$1"
+
+	case $key in
+ 		-i|--install)
+			echo "Install..."
+			check_os
+			install_deps
+			create_user
+			install_honeypy
+			set_profile
+			install_iptkit
+			
+			shift
+			;;
+
+		-p|--profile)
+			shift
+	    		set_profile $1
+			shift
+	    		;;
+	
+	  	-lp|--list-profiles)
+			list_profiles
+			shift
+			;;
+	
+	    	*)
+			usage
+			shift
+	    		;;
+	esac
+done
+
+if [ "$DISPLAY_USAGE" = true ]
+then
+	usage
+fi
+
+exit
