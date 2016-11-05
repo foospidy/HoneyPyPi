@@ -12,7 +12,7 @@ This assumes you have Raspbian installed on your Raspberry Pi (https://www.raspb
 Usage:
 ./HoneyPyPi [-i] [-p] [-lp]
 
--i        Install everyting.
+-i        Install everything.
 -p        Set/change HoneyPy service profile.
 -lp       List profiles.
 ```
