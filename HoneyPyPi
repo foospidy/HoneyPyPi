@@ -94,6 +94,12 @@ list_profiles () {
 	fi
 }
 
+remove_user () {
+	deluser honey
+	rm -rf /home/honey
+	echo "Removed honey."
+}
+
 usage () {
 	echo "Usage:"
 	echo "./HoneyPyPi [-i] [-p] [-lp]"
@@ -101,6 +107,7 @@ usage () {
         echo "-i        Install everything."
         echo "-p        Set/change HoneyPy service profile."
 	echo "-lp       List profiles."
+	echo "-r"	Remove honey user.
 }
 
 while [[ $# -gt 0 ]]
@@ -128,6 +135,11 @@ do
 	
 	  	-lp|--list-profiles)
 			list_profiles
+			shift
+			;;
+
+		-r|--remove)
+			remove_user
 			shift
 			;;
 	
