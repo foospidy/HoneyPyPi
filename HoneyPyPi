@@ -107,7 +107,7 @@ usage () {
         echo "-i        Install everything."
         echo "-p        Set/change HoneyPy service profile."
 	echo "-lp       List profiles."
-	echo "-r       	Remove honey user."
+	echo "-r       Remove honey user."
 }
 
 while [[ $# -gt 0 ]]
